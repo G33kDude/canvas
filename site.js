@@ -1,15 +1,33 @@
-$(document).ready(function() {
-	$("#canvas").click(function(event) {
-		if(typeof event.offsetX === "undefined" || typeof event.offsetY === "undefined") {
-			var targetOffset = $(event.target).offset();
-			event.offsetX = event.pageX - targetOffset.left;
-			event.offsetY = event.pageY - targetOffset.top;
+function position(e) {
+	if(typeof e.offsetX === "undefined" || typeof e.offsetY === "undefined") {
+		var offset = $(e.target).offset();
+		return {
+			x: e.pageX - offset.left,
+			y: e.pageY - offset.top
 		}
-		// alert(event.offsetX + " " + event.offsetY);
-		context = this.getContext('2d');
-		context.beginPath();
-		context.arc(event.offsetX, event.offsetY, 5, 0, 2 * Math.PI, false);
-		context.fillStyle = 'green';
-		context.fill();
+	}
+	return {x: e.offsetX, y: e.offsetY}
+}
+
+var mouseHeld = false;
+
+$(document).ready(function() {
+	$("#canvas")
+	.mousemove(function(e) {
+		if (mouseHeld)
+		{
+			pos = position(e)
+			context = this.getContext('2d');
+			context.beginPath();
+			context.arc(pos.x, pos.y, 5, 0, 2 * Math.PI, false);
+			context.fillStyle = 'green';
+			context.fill();
+		}
+	})
+	.mousedown(function(e) {
+		mouseHeld = true;
+	})
+	.mouseup(function(e) {
+		mouseHeld = false;
 	});
 });
