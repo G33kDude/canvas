@@ -41,5 +41,23 @@ $(document).ready(function() {
 		pos = position(e);
 		context.lineTo(pos.x, pos.y);
 		context.stroke();
+		context.beginPath();
+	})
+	.mouseout(function(e) {
+		pos = position(e);
+		context.lineTo(pos.x, pos.y);
+		context.stroke();
+		context.beginPath();
+		// context.moveTo(pos.x, pos.y);
+	})
+	.mouseenter(function(e) {
+		// alert("test");
+		pos = position(e);
+		// context.beginPath();
+		context.moveTo(pos.x, pos.y);
+	});
+	
+	$(document).mouseup(function(e) {
+		mouseHeld = false;
 	});
 });
